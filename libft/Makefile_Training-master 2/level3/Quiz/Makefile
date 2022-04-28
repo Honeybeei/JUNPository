@@ -1,14 +1,16 @@
-CC = gcc
 NAME = libft.a
-SRCS = first.c \
-		second.c \
-		third.c
-OBJS = first.o \
-		second.o \
-		third.o
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
 AR = ar
 ARFLAGS = -rc
 
-$(NAME) : $(OBJS)
-	$(AR) $(ARFLAGS) $@ $?
+SRCS = first.c \
+	second.c \
+	third.c
+OBJS = $(SRCS:.c=.o)
 
+
+$(NAME) : $(OBJS)
+	$(AR) $(ARFLAGS) $@ $^
+
+$(OBJS) : $(SRCS)
