@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seoyoo < seoyoo@student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/27 20:22:33 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/04/29 14:32:42 by seoyoo           ###   ########.fr       */
+/*   Created: 2022/04/29 14:26:11 by seoyoo            #+#    #+#             */
+/*   Updated: 2022/04/29 16:31:38 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t			i;
-	unsigned char	*s_temp;
+	char	*dst;
 
-	if (s == NULL)
-		return ;
-	s_temp = (unsigned char *)s;
-	i = 0;
-	while (i < n)
-	{
-		s_temp[i] = 0;
-		i++;
-	}
-	s = s_temp;
+	dst = malloc((len + 1) * sizeof(char));
+	if (dst == NULL)
+		return (NULL);
+	ft_strlcpy(dst, &(s[start]), len + 1);
+	return (dst);
 }
+

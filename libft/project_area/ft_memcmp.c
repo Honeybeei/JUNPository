@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seoyoo < seoyoo@student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/27 20:22:33 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/04/29 14:32:42 by seoyoo           ###   ########.fr       */
+/*   Created: 2022/04/28 22:49:39 by seoyoo            #+#    #+#             */
+/*   Updated: 2022/04/28 22:55:45 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
 	size_t			i;
-	unsigned char	*s_temp;
+	unsigned char	*temp_s1;
+	unsigned char	*temp_s2;
 
-	if (s == NULL)
-		return ;
-	s_temp = (unsigned char *)s;
+	temp_s1 = (unsigned char *)s1;
+	temp_s2 = (unsigned char *)s2;
+	if (n == 0)
+		return (0);
 	i = 0;
 	while (i < n)
 	{
-		s_temp[i] = 0;
+		if (temp_s1[i] != temp_s2[i])
+			return (temp_s1[i] - temp_s2[i]);
 		i++;
 	}
-	s = s_temp;
+	return (0);
 }
