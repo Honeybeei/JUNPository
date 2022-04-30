@@ -6,7 +6,7 @@
 /*   By: seoyoo < seoyoo@student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 14:26:11 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/04/29 16:31:38 by seoyoo           ###   ########.fr       */
+/*   Updated: 2022/04/30 02:59:14 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	ft_strlcpy(dst, &(s[start]), len + 1);
 	return (dst);
 }
-

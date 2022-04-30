@@ -6,7 +6,7 @@
 /*   By: seoyoo < seoyoo@student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 21:31:49 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/04/28 21:47:57 by seoyoo           ###   ########.fr       */
+/*   Updated: 2022/04/30 02:52:06 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	while (s1[i] != 0)
 	{
 		if (i == n - 1)
-			return (s1[i] - s2[i]);
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 		if (s1[i] != s2[i])
-			return (s1[i] - s2[i]);
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 		i++;
 	}
-	return (s1[i] - s2[i]);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

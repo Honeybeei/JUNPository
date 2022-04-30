@@ -6,7 +6,7 @@
 /*   By: seoyoo < seoyoo@student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 11:57:44 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/04/29 14:33:27 by seoyoo           ###   ########.fr       */
+/*   Updated: 2022/04/30 02:31:48 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,11 @@
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	unsigned char	*dst;
-	size_t			total_size;
+	void	*dst;
 
-	total_size = count * size;
-	dst = malloc(total_size);
+	dst = malloc(count * size);
 	if (dst == NULL)
 		return (NULL);
-	ft_bzero(dst, total_size);
+	ft_bzero(dst, count * size);
 	return (dst);
 }

@@ -6,7 +6,7 @@
 #    By: seoyoo < seoyoo@student.42seoul.kr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/27 13:42:21 by seoyoo            #+#    #+#              #
-#    Updated: 2022/04/29 14:31:59 by seoyoo           ###   ########.fr        #
+#    Updated: 2022/04/30 10:42:48 by seoyoo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,10 @@ SRCS = \
 		ft_atoi.c \
 		ft_calloc.c \
 		ft_strdup.c \
-		ft_substr.c
+		ft_substr.c \
+		ft_strjoin.c \
+		ft_strtrim.c \
+		ft_split.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRCS))
 
@@ -94,4 +97,4 @@ fclean : clean
 
 re : fclean all
 
-
+.PONEY : all bonus clean fclean re
