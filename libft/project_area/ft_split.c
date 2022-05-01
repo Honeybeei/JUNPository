@@ -3,133 +3,97 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seoyoo < seoyoo@student.42seoul.kr>        +#+  +:+       +#+        */
+/*   By: seoyoo <seoyoo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/30 05:53:02 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/05/01 16:26:36 by seoyoo           ###   ########.fr       */
+/*   Updated: 2022/05/01 17:39:35 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
 #include "libft.h"
 
-size_t	count_string(char const *s, char c)
+static size_t count_strings(char *src, char c)
 {
-	size_t	i;
+	size_t	idx_src;
 	size_t	count;
 
 	count = 0;
-	i = 0;
-	while (s[i] != '\0')
+	idx_src = 0;
+	while (src[idx_src] != '\0')
 	{
-		if (s[i] != c)
+		if (src[idx_src] != c)
 		{
 			count++;
-			while (s[i] != c && s[i + 1] != '\0')
-				i++;
-		}
-		i++;
-	}
-	return (count);
-}
-
-size_t	get_splitted_str_len(char *start, char c)
-{
-	size_t	i;
-
-	i = 0;
-	while (start[i] != c && start[i] != '\0')
-		i++;
-	return (i);
-}
-
-void	dup_split_str(char *dst, char *src, size_t str_len)
-{
-	dst = malloc((str_len + 1) * sizeof(char));
-	if (dst == NULL)
-		return ;
-	ft_strlcpy(dst, src, str_len + 1);
-}
-
-char	**split_that_shit(char const *s, char c, char **str_arr)
-{
-	size_t	i;
-	char	*temp_s;
-
-	i = 0;
-	temp_s = (char *)s;
-	while (*temp_s != '\0')
-	{
-		if (*temp_s != c)
-		{
-			dup_split_str(temp_s, str_arr[i], get_splitted_str_len(temp_s, c));
-			i++;
-			while (*temp_s != c)
+			while (src[idx_src] != c)
 			{
-				temp_s++;
-				if (*temp_s == '\0')
-					return (str_arr);
-			}
-		}
-		temp_s++;
-	}
-	return (str_arr);
-}
-
-char	**ft_split(char const *s, char c)
-{
-	char	**str_arr;
-	size_t	string_count;
-
-	string_count = count_string(s, c);
-	str_arr = malloc((string_count + 1) * sizeof(char *));
-	if (str_arr == NULL)
-		return (NULL);
-	str_arr[string_count] = NULL;
-	return (split_that_shit(s, c, str_arr));
-}
-*/
-
-#include "libft.h"
-
-size_t str_count(char *src, char c)
-{
-	size_t	i;
-	size_t	count;
-
-	count = 0;
-	i = 0;
-	while (src[i] != '\0')
-	{
-		if (src[i] != c)
-		{
-			count++;
-			while (src[i] != c)
-			{
-				if (src[i] == '\0')
+				if (src[idx_src] == '\0')
 					return (count);
-				i++;
+				idx_src++;
 			}
 		}
 		else
-			i++;
+			idx_src++;
 	}
 	return (count);
 }
 
-char	**ft_split(char const *s, char c)
+// 'split_n_duplicate' is a function which splits string by divider
+// [Parameters]
+// 1. char *src : Address of src string. Will jump all the divider if they are infront of the string which we want to duplicate. 
+// 2. char *dest : String which is splitted and duplicated will be pointed by this.
+// 3. char divider : character which will act as divider
+// [Return value]
+// char * : Return NULL if dest is the last string, if not, return the src which will be splitted again.
+static char	*split_n_duplicate(char *src, char *dest, char divider)
 {
+	size_t	str_len;
+	size_t	idx;
 
-	
+	while (*src == divider)
+		src++;
+	str_len = 0;
+	while (src[str_len] != divider || src[str_len] != '\0')
+		str_len++;
+	dest = malloc(sizeof(char) * str_len);
+	if (dest == NULL)
+		return NULL;
+	idx = 0;
+	while (idx < str_len)
+	{
+		dest[idx] = src[idx];
+		idx++;
+	}
+	dest[idx] = '\0';
+	if (src[str_len] == divider)
+		return (src + str_len);
+	return (NULL);
 }
 
-#include <stdio.h>
-
-int main(void)
+// ft_split is a function which splits string with divider and returns the array of strings splitted.
+// [Parameters]
+// 1. char const *s : String which will be divided
+// 2. char c : A single character which will work as a divider
+// [Return value]
+// char ** : Array of strings. Each string will be dynamically allocated. 
+char	**ft_split(char const *s, char c)
 {
-	char src[] = "00000";
-	char divider = '0';
-	printf("%lu\n", str_count(src, divider));
+	size_t	str_count;
+	char	*str_arr;
+	size_t	idx_str_arr;
+	char	*src;
 
-	return 0;
+	str_count = count_strs(s, c);
+	str_arr = malloc(sizeof(char *) * (str_count + 1));
+	if (str_arr == NULL)
+		reuturn (NULL);
+	str_arr[str_count] == NULL;
+	idx_str_arr = 0;
+	src = (char *)s;
+	while (idx_str_arr < str_count && src != NULL)
+	{
+		src = split_n_duplicate(src, str_arr[idx_str_arr], c);
+		idx_str_arr++;
+	}
+	str_arr[idx_str_arr] = NULL;
+	return (str_arr);
 }
