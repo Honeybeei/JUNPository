@@ -28,7 +28,11 @@
     "**/.vscode/**"
   ],
   "files.associations": {
-    "unistd.h": "c",
-    "exception": "cpp"
+    "locale": "c",
+    "__bit_reference": "c",
+    "__string": "c",
+    "string": "c",
+    "string_view": "c",
+    "algorithm": "c"
   }
 }

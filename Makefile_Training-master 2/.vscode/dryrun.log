@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/seojunyoo/Desktop/42_assignments/libft/Makefile_Training-master 2'
+make: Leaving directory `/Users/seojunyoo/Desktop/42_assignments/libft/Makefile_Training-master 2'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+
