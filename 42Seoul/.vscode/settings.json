@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "stdio.h": "c",
+        "_types.h": "c",
+        "cstdio": "c",
+        "_stdio.h": "c",
+        "ft_printf.h": "c"
+    }
+}
