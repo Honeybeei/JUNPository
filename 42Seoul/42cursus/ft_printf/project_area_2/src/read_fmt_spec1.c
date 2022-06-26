@@ -6,11 +6,11 @@
 /*   By: seoyoo < seoyoo@student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 22:30:41 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/06/22 22:33:07 by seoyoo           ###   ########.fr       */
+/*   Updated: 2022/06/23 17:19:39 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../inc/ft_printf.h"
 
 // Read width specification. If '*' occurs at width field, read ap and take it 
 // as a width
@@ -63,7 +63,7 @@ char	*read_size(char *str, t_fmt_spec *fmt_spec)
 	int	i;
 
 	i = 0;
-	while (!is_type_spec(str))
+	while (!is_type_spec(*str))
 	{
 		if (i > 3)
 		{

@@ -6,11 +6,11 @@
 /*   By: seoyoo < seoyoo@student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 22:04:13 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/06/22 22:33:55 by seoyoo           ###   ########.fr       */
+/*   Updated: 2022/06/23 19:58:27 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../inc/ft_printf.h"
 
 // Read format specification and save specifications to fmt_spec.
 char *read_fmt_spec(char *str, va_list ap, t_fmt_spec *fmt_spec)
@@ -30,8 +30,10 @@ void	initialize_fmt_spec(t_fmt_spec *fmt_spec)
 	initialize_flag(&(fmt_spec->flag));
 	fmt_spec->specified_width = 0;
 	fmt_spec->precision = 0;
-	ft_bzero(fmt_spec->precision, 3);
+	ft_bzero(fmt_spec->size, 3);
 	fmt_spec->type = 0;
+	fmt_spec->pre_fmt_str = NULL;
+	fmt_spec->pre_fmt_str = NULL;
 }
 
 // Initialize flag variable

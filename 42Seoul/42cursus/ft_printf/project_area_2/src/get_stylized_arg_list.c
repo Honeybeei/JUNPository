@@ -6,7 +6,7 @@
 /*   By: seoyoo < seoyoo@student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 21:22:04 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/06/22 22:33:43 by seoyoo           ###   ########.fr       */
+/*   Updated: 2022/06/23 18:06:36 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ char	**get_stylized_arg_list(char *str, va_list ap)
 		else
 			str++;
 	}
+	stylized_arg_list[i] = '\0';
 	return (stylized_arg_list);
 }
 
@@ -64,4 +65,10 @@ char *arg_to_str(char *str, char *dst, va_list ap)
 	str = read_fmt_spec(str, ap, &fmt_spec);
 	dst = apply_fmt_spec(fmt_spec, ap);  // TODO
 	return (str);
+}
+
+
+char *apply_fmt_spec(t_fmt_spec s_fmt_spec, va_list ap)
+{
+	
 }

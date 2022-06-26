@@ -6,15 +6,15 @@
 /*   By: seoyoo < seoyoo@student.42seoul.kr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 13:57:09 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/06/22 22:32:32 by seoyoo           ###   ########.fr       */
+/*   Updated: 2022/06/23 21:38:46 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include "libft.h"
-# include "my_itoa.h"
+# include "./libft.h"
+# include "./my_itoa.h"
 # include <stdbool.h>
 # include <stdlib.h> // malloc, free
 # include <unistd.h> // write
@@ -39,6 +39,8 @@ typedef struct s_fmt_spec
 	int precision;
 	char size[3];
 	char type;
+	char *pre_fmt_str;
+	char *fmt_str;
 } t_fmt_spec;
 
 // ft_printf.c
