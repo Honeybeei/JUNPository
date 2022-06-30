@@ -30,6 +30,8 @@
   ],
   "files.associations": {
     "ft_printf.h": "c",
-    "cstdarg": "c"
+    "cstdarg": "c",
+    "_types.h": "c",
+    "stdbool.h": "c"
   }
 }
