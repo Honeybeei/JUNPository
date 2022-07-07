@@ -6,7 +6,7 @@
 /*   By: seoyoo <seoyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 00:24:28 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/06/30 15:01:29 by seoyoo           ###   ########.fr       */
+/*   Updated: 2022/07/03 15:43:35 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ t_fmt	**parse_string(char *str, va_list ap);
 		bool	is_vld_size_type_comb(char *str);
 			bool	is_h_comb_valid(char *str);
 			bool	is_l_comb_valid(char *str);
+		// TODO : CHECK_FLAG_COMB_VLD
+		// TODO : CHECK_TYPE_FLAG_COMB_VLD
+		// TODO : CHECK_TYPE_PRECISION_COMB_VLD
 	char	*parse_fmt_spec(char *str, va_list ap, t_fmt *new_node);
 		void	initialize_fmt_spec(t_spec *spec);
 			void	initialize_flag(t_flag *flag);
@@ -31,7 +34,8 @@ t_fmt	**parse_string(char *str, va_list ap);
 		char	*read_size(char *str, t_spec *spec);
 		char	*read_type(char *str, t_spec *spec);
 	
-
+	char	*stylize_arg_to_str(t_spec *spec, va_list ap);
+		char	*stylize_c_type_arg(t_spec *spec, va_list ap);
 
 
 	char	*read_plain_str(char *str, t_fmt *new_node);
@@ -80,11 +84,13 @@ t_fmt	**parse_string(char *str, va_list ap)
 		}
 		else
 			str = read_plain_str(str, new_node);
+		if (new_node->str == NULL)
+			return (NULL);
 	}
 	return (head);
 }
 
-t_fmt *add_new_t_fmt_node(t_fmt **tail)
+t_fmt	*add_new_t_fmt_node(t_fmt **tail)
 {
 	t_fmt	*new_node;
 
@@ -145,8 +151,7 @@ bool	is_h_comb_valid(char *str)
 		if (ft_strchr("diuxX", *(str + 2)))
 			return (true);
 	}
-	else
-		return (false);
+	return (false);
 }
 
 bool	is_l_comb_valid(char *str)
@@ -158,19 +163,20 @@ bool	is_l_comb_valid(char *str)
 		if (ft_strchr("diuxX", *(str + 2)))
 			return (true);
 	}
-	else
-		return (false);
+	return (false);
 }
 
 char	*parse_fmt_spec(char *str, va_list ap, t_fmt *new_node)
 {
-	initialize_spec(new_node->spec);
+	initialize_fmt_spec(new_node->spec);
 	str = read_flag(str, new_node->spec);
 	str = read_width(str, new_node->spec, ap);
 	str = read_precision(str, new_node->spec, ap);
 	str = read_size(str, new_node->spec);
 	str = read_type(str, new_node->spec);
-	stylize_arg_to_str(new_node, ap);
+	new_node->str = stylize_arg_to_str(new_node->spec, ap);
+		if (new_node->str == NULL)
+			return (NULL);
 	return (str);
 }
 
@@ -178,7 +184,7 @@ void	initialize_fmt_spec(t_spec *spec)
 {
 	initialize_flag(&(spec->flag));
 	spec->specified_width = 0;
-	spec->precision = 0;
+	spec->precision = -1;
 	spec->size = 0;
 	spec->type = 0;
 }
@@ -248,6 +254,7 @@ char	*read_precision(char *str, t_spec *spec, va_list ap)
 		}
 		else
 		{
+			spec->precision = 0;
 			while ('0' <= *str && *str <= '9')
 			{
 				spec->precision *= 10;
@@ -256,7 +263,8 @@ char	*read_precision(char *str, t_spec *spec, va_list ap)
 			}
 		}
 	}
-	return (str);
+	else
+		return (str);
 }
 
 char	*read_size(char *str, t_spec *spec)
@@ -265,25 +273,25 @@ char	*read_size(char *str, t_spec *spec)
 	{
 		if (*(str + 1) == 'h')
 		{
-			spec->size = (int)sizeof(char);
+			spec->size = sizeof(char);
 			return (str + 2);
 		}
-		spec->size = (int)sizeof(short int);
+		spec->size = sizeof(short);
 		return (str + 1);
 	}
 	else if (*str == 'l')
 	{
 		if (*(str + 1) == 'l')
 		{
-			spec->size = (int)sizeof(long long int);
+			spec->size = sizeof(long long);
 			return (str + 2);
 		}
-		spec->size = (int)sizeof(long int);
+		spec->size = sizeof(long);
 		return (str + 1);
 	}
 	else
 	{
-		spec->size = (int)sizeof(int);
+		spec->size = sizeof(int);
 		return (str);
 	}
 }
@@ -294,7 +302,115 @@ char	*read_type(char *str, t_spec *spec)
 	return (str + 1);
 }
 
-stylize_arg_to_str(new_node, ap)
+// stylelize argument with format specfication and return stylized string
+char	*stylize_arg_to_str(t_spec *spec, va_list ap)
+{
+	char type;
+	char *temp_str;
+
+	type = spec->type;
+	if (type == 'c')
+		temp_str = stylize_c_type_arg(spec, ap);
+	else if (type == 's')
+		temp_str = stylize_s_type_arg(spec, ap);
+	else if (type == 'p')
+		temp_str = stylize_p_type_arg(spec, ap);
+	else if (type == 'd' || type == 'i')
+		temp_str = stylize_signed_int_type_arg(spec, ap);
+	else if (type == 'u' || type == 'x' || type == 'X')
+		temp_str = stylize_unsigned_int_type_arg(spec, ap);
+	else
+		return (NULL);
+	return (manage_str_width(spec, temp_str));
+}
+
+// apply size->precision->flag excluding width to argument and get string
+char	*stylize_c_type_arg(t_spec *spec, va_list ap)
+{
+	char *str;
+
+	str = malloc(sizeof(char) * 2);
+	str[0] = va_arg(ap, int);
+	str[1] = '\0';
+	return (str);
+}
+
+char	*stylize_s_type_arg(t_spec *spec, va_list ap)
+{
+	char	*str;
+	char	*sub_str;
+	size_t	str_len;
+
+	str = va_arg(ap, char *);
+	str_len = ft_strlen(str);
+	if (str_len < spec->precision)
+		return (ft_substr(str, 0, spec->precision));
+	else
+		return (ft_strdup(str));
+}
+
+char	*stylize_p_type_arg(t_spec *spec, va_list ap)
+{
+	unsigned long long int n;
+	char *str;
+	char *new_str;
+
+	n = va_arg(ap, long long);
+	str = my_itoa_unsigned(n, "0123456789abcdef");
+	new_str = ft_strjoin('0x', str);
+	free(str);
+	return (new_str);
+}
+
+char	*stylize_signed_int_type_arg(t_spec *spec, va_list ap)
+{
+	long long n;
 
 
+	if (spec->size <= sizeof(int))
+		n = va_arg(ap, int);
+	else if (spec->size == sizeof(long))
+		n = va_arg(ap, long);
+	else
+		n = va_arg(ap, long long);
+	
+}
+// return padded(if) stylized string
+char	*manage_str_width(t_spec *spec, char *temp_str)
+{
+	size_t	temp_str_len;
+	size_t	margin_str_len;
+	char	*margin_str;
+	char	*padded_str;
 
+	temp_str_len = ft_strlen(temp_str);
+	if (spec->specified_width > temp_str_len)
+	{
+		margin_str_len = spec->specified_width - temp_str_len;
+		if (spec->flag.zero)
+			margin_str = make_margin_str('0', margin_str_len);
+		else
+			margin_str = make_margin_str(' ', margin_str_len);
+		if (spec->flag.minus)
+			padded_str = ft_strjoin(temp_str, margin_str);
+		else
+			padded_str = ft_strjoin(margin_str, temp_str);
+		free(temp_str);
+		free(margin_str);
+		return (padded_str);
+	}
+	else
+		return (temp_str);
+}
+
+char	*make_margin_str(char c, size_t len)
+{
+	char	*str;
+
+	str = malloc(sizeof(char) * (len + 1));
+	if (str == NULL)
+		return (NULL);
+	ft_memset(str, c, len);
+	str[len] = '\0';
+	return (str);
+}
