@@ -5,44 +5,47 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: seoyoo <seoyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/05 16:01:32 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/07/08 17:15:51 by seoyoo           ###   ########.fr       */
+/*   Created: 2022/07/10 23:42:25 by seoyoo            #+#    #+#             */
+/*   Updated: 2022/07/12 17:41:40 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdbool.h>
+#include <stdlib.h>  // malloc(), free()
+#include <unistd.h>  // open()
 
-# define BUFFER_SIZE 15  // will be compiled with -D option. now just for making
+# define BUFFER_SIZE 1
+# define TRUE 1
+# define FALSE 0
 
 typedef struct s_buffer_node
 {
-	char				buf[BUFFER_SIZE + 1];
-	bool				eof;
-	struct s_bufer_node	*next;
-}	t_buf;
+	char buffer[BUFFER_SIZE];
+	char					*start;
+	char					*end;
+	ssize_t					read_cnt;
+	struct s_buffer_node	*next;
+}	t_b_node;
 
-typedef struct s_head_pointer_list
+typedef struct s_head_pointer_node
 {
 	int							fd;
-	t_buf						*head_node;
-	struct s_head_pointer_list	*next;
-}	t_head_list;
+	t_b_node					*head;
+	struct s_head_pointer_node	*next;
+}	t_h_p_node;
 
-// get_next_line.c
 char		*get_next_line(int fd);
-t_head_list	*search_matching_fd(int fd, t_head_list *head_node_list);
-t_buf		*new_buf_node(int fd);
-char		*termination_protocol(t_head_list *head_p);
-size_t		count_char(t_buf *buf_p);
-void		copy_data_from_buf_to_str(t_buf *buf_p, char *str);
-
-// get_next_line_utils.c
+t_h_p_node  *search_fd_matching_head_ptr(int fd, t_h_p_node *head_ptr_arr);
+t_h_p_node	*make_new_h_p_node(int fd);
+t_b_node	*make_new_node(int fd);
+size_t		count_char_till_end(t_h_p_node *head_ptr);
 void		*ft_memchr(const void *s, int c, size_t n);
+void		copy_char_from_buffer_to_str(t_h_p_node *head_ptr, char *str);
+void		termination_protocol(t_h_p_node *head_ptr);
+
+
+
 
 #endif
