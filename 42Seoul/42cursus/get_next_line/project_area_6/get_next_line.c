@@ -6,7 +6,7 @@
 /*   By: seoyoo <seoyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 20:51:32 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/07/13 20:25:04 by seoyoo           ###   ########.fr       */
+/*   Updated: 2022/07/13 23:57:58 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_next_line(int fd)
 	str_len = count_char_till_end(head_ptr);
 	str = malloc(sizeof(char) * (str_len + 1));
 	if (str == NULL)
-		return (NULL);
+		return (termination_protocol(head_ptr));
 	str[str_len] = '\0';
 	copy_char_from_buffer_to_str(head_ptr, str);
 	termination_protocol(head_ptr);
@@ -121,7 +121,7 @@ void	copy_char_from_buffer_to_str(t_h_p_node *head_ptr, char *str)
 /*
 This function free nodes from head to before node of tail. 
 */
-void	termination_protocol(t_h_p_node *head_ptr)
+void	*termination_protocol(t_h_p_node *head_ptr)
 {
 	t_b_node	*b_node;
 	t_b_node	*del_node;
@@ -144,4 +144,5 @@ void	termination_protocol(t_h_p_node *head_ptr)
 		b_node->end = find_closest_end(b_node);
 		head_ptr->head = b_node;
 	}
+	return (NULL);
 }

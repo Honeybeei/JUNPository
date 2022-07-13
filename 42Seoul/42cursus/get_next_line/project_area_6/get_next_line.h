@@ -6,7 +6,7 @@
 /*   By: seoyoo <seoyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 20:51:34 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/07/13 20:26:05 by seoyoo           ###   ########.fr       */
+/*   Updated: 2022/07/13 22:51:56 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char		*get_next_line(int fd);
 t_h_p_node	*search_fd_matching_head_ptr(int fd, t_h_p_node *head_ptr_arr);
 size_t		count_char_till_end(t_h_p_node	*head_ptr);
 void		copy_char_from_buffer_to_str(t_h_p_node *head_ptr, char *str);
-void		termination_protocol(t_h_p_node *head_ptr);
+void		*termination_protocol(t_h_p_node *head_ptr);
 
 // get_next_line_utils.c
 t_h_p_node	*make_new_h_p_node(int fd);

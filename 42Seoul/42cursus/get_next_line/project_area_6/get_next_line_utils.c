@@ -6,7 +6,7 @@
 /*   By: seoyoo <seoyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 21:14:05 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/07/13 20:25:30 by seoyoo           ###   ########.fr       */
+/*   Updated: 2022/07/13 22:48:14 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ t_b_node	*make_new_b_node(int fd)
 		return (NULL);
 	new_node->read_cnt = read(fd, new_node->buffer, BUFFER_SIZE);
 	if (new_node->read_cnt <= 0)
+	{
+		free(new_node);
 		return (NULL);
+	}
 	new_node->start = 0;
 	new_node->end = find_closest_end(new_node);
 	new_node->next = NULL;
