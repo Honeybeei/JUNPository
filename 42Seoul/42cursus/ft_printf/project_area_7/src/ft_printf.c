@@ -6,7 +6,7 @@
 /*   By: seoyoo <seoyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:43:39 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/07/13 21:22:28 by seoyoo           ###   ########.fr       */
+/*   Updated: 2022/07/14 14:35:14 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,49 @@ int		ft_printf(const char *format, ...)
 	return (char_count);
 }
 
+/*
+This function parses format string and split it in to t_fmt node linked list. 
+*/
 t_fmt	*parse_string_to_list(char *str, va_list ap)
 {
+	size_t	i;
+	t_fmt	*head;
+
+	head = NULL;
+	i = 0;
+	while (TRUE)
+	{
+		if (str[i] == '%')
+		{
+			
+		}
+		else if (str[i] == '\0')
+		{
+
+		}
+		else
+		{
+			i++;
+		}
+	}
 	
 }
+
+
 
 int	print_format_node(t_fmt *head)
 {
 
 }
 
-termination_protocol(t_fmt *head)
+
+
+void	*termination_protocol(t_fmt *head)
 {
 
 }
+
+
+
+
+

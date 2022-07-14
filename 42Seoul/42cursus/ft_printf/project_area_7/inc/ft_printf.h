@@ -6,7 +6,7 @@
 /*   By: seoyoo <seoyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 20:40:15 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/07/13 21:11:49 by seoyoo           ###   ########.fr       */
+/*   Updated: 2022/07/14 01:07:11 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <unistd.h> // write
 # include <stdarg.h> // va_start, va_arg, va_copy, va_end
 
-# define TURE 1
+# define TRUE 1
 # define FALIE 0
 
 typedef struct s_flag
@@ -44,9 +44,18 @@ typedef struct s_format_specification
 
 typedef struct s_format
 {
-	t_f_spec		*spec;
-	char			*str;
-	struct s_format	*next;
+	t_f_spec		*spec_;
+	char			*str_;
+	struct s_format	*next_;
 }	t_fmt;
+
+// ft_printf.c
+int		ft_printf(const char *format, ...);
+t_fmt	*parse_string_to_list(char *str, va_list ap);
+int		print_format_node(t_fmt *head);
+void 	*termination_protocol(t_fmt *head);
+
+// ft_printf_utils.c
+t_fmt	*new_t_fmt_node(t_f_spec *spec, char *str);
 
 #endif
