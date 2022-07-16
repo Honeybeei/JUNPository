@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seoyoo <seoyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 20:51:34 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/07/14 22:58:35 by seoyoo           ###   ########.fr       */
+/*   Updated: 2022/07/15 20:33:23 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # include <stdlib.h>  // malloc(), free()
 # include <unistd.h>  // open()
-#include <stdio.h>  // TODO : erase this
 
-# define BUFFER_SIZE 1
+// # define BUFFER_SIZE 10
 # define TRUE 1
 # define FALSE 0
 
@@ -52,5 +51,6 @@ t_h_p_node	*make_new_h_p_node(int fd);
 t_b_node	*make_new_b_node(int fd);
 ssize_t		find_closest_end(t_b_node *buffer_node);
 void		*ft_memcpy(void *dst, const void *src, size_t n);
+t_h_p_node	*delete_head_ptr(t_h_p_node *head_ptr, t_h_p_node *head_ptr_arr);
 
 #endif

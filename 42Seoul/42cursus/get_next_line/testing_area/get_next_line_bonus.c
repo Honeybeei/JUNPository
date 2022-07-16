@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seoyoo <seoyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 20:51:32 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/07/15 04:02:32 by seoyoo           ###   ########.fr       */
+/*   Updated: 2022/07/15 20:32:02 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_next_line(int fd)
 {
@@ -25,7 +25,10 @@ char	*get_next_line(int fd)
 	if (head_ptr->head == NULL)
 		head_ptr->head = make_new_b_node(head_ptr->fd);
 	if (head_ptr->head == NULL)
+	{
+		head_ptr_arr = delete_head_ptr(head_ptr, head_ptr_arr);
 		return (NULL);
+	}
 	str_len = count_char_till_end(head_ptr);
 	str = malloc(sizeof(char) * (str_len + 1));
 	if (str == NULL)
@@ -52,7 +55,7 @@ t_h_p_node	*search_fd_matching_head_ptr(int fd, t_h_p_node *head_ptr_arr)
 		else if (h_p_node->next == NULL)
 		{
 			h_p_node->next = make_new_h_p_node(fd);
-		∏	return (h_p_node->next);
+			return (h_p_node->next);
 		}
 		else
 			h_p_node = h_p_node->next;
@@ -126,12 +129,13 @@ void	*termination_protocol(t_h_p_node *head_ptr)
 	t_b_node	*b_node;
 	t_b_node	*del_node;
 
+	if (head_ptr == NULL)
+		return (NULL);
 	b_node = head_ptr->head;
 	while (b_node->next != NULL)
 	{
 		del_node = b_node;
 		b_node = b_node->next;
-		
 		free(del_node);
 	}
 	if (b_node->end == b_node->read_cnt - 1)

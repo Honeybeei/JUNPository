@@ -6,7 +6,7 @@
 /*   By: seoyoo <seoyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 20:51:34 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/07/14 22:58:35 by seoyoo           ###   ########.fr       */
+/*   Updated: 2022/07/15 17:54:26 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>  // open()
 #include <stdio.h>  // TODO : erase this
 
-# define BUFFER_SIZE 1
+# define BUFFER_SIZE 10
 # define TRUE 1
 # define FALSE 0
 

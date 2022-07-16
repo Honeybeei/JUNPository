@@ -1,76 +1,43 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: seoyoo <seoyoo@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 20:39:01 by seoyoo            #+#    #+#              #
-#    Updated: 2022/07/15 20:44:16 by seoyoo           ###   ########.fr        #
+#    Updated: 2022/07/15 18:02:52 by seoyoo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # target
-NAME = libftprintf.a
+NAME = a.out
 
 # compiler
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-# archive
-AR = ar
-ARFLAGS = -rcs
-
-# include
-INC_DIR = ./inc
-INC = -I$(INC_DIR)
-
-# my_lib
-MY_LIB_DIR = ./my_lib/
-MY_LIB_ARC = my_lib.a
-
 # source
-SRC_DIR = ./src/
+SRC_DIR = ./
 SRC_FILE = \
-		ft_printf.c \
+		get_next_line.c \
+		get_next_line_utils.c \
+		main.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC_FILE))
-
-# object
-OBJ_DIR = ./obj/
-OBJ_FILE = $(SRC_FILE:.c=.o)
-OBJS = $(addprefix $(OBJ_DIR), $(OBJ_FILE))
-
-# test
-TEST_DIR = ./test/
-TEST_FILES = \
-		main_test.c
-
-TEST_SRCS = $(addprefix $(TEST_DIR), $(TEST_FILES))
 
 # rules
 all : $(NAME)
 
 bonus : all
 
-$(NAME) : $(OBJS)
-	@$(AR) $(ARFLAGS) $@ $^
-
-$(OBJ_DIR)%.o : $(SRC_DIR)%.c
-	@make -C $(MY_LIB_DIR)
-	@cp $(MY_LIB_DIR)/$(MY_LIB_ARC) .
-	@mv $(MY_LIB_ARC) $(NAME)
-	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+$(NAME) :
+	$(CC) $(CFLAGS) -g3 $(SRCS)
 
 clean :
-	@make clean -C $(MY_LIB_DIR)
-	@rm -rf ./obj
-
-fclean : clean
-	@rm -f $(MY_LIB_DIR)/$(MY_LIB_ARC)
 	@rm -f $(NAME)
+	@rm -rf $(NAME).dSYM
 
-re: fclean all
+re: clean all
 
-.PONEY: all bonus clean fclean re
+.PONEY: all clean re

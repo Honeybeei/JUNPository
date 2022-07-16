@@ -6,7 +6,7 @@
 /*   By: seoyoo <seoyoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 20:51:32 by seoyoo            #+#    #+#             */
-/*   Updated: 2022/07/15 04:02:32 by seoyoo           ###   ########.fr       */
+/*   Updated: 2022/07/15 18:25:43 by seoyoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@ char	*get_next_line(int fd)
 	if (head_ptr->head == NULL)
 		head_ptr->head = make_new_b_node(head_ptr->fd);
 	if (head_ptr->head == NULL)
+	{
+		termination_protocol(head_ptr);
+		free(head_ptr);
 		return (NULL);
+	}
 	str_len = count_char_till_end(head_ptr);
 	str = malloc(sizeof(char) * (str_len + 1));
 	if (str == NULL)
@@ -52,7 +56,7 @@ t_h_p_node	*search_fd_matching_head_ptr(int fd, t_h_p_node *head_ptr_arr)
 		else if (h_p_node->next == NULL)
 		{
 			h_p_node->next = make_new_h_p_node(fd);
-		∏	return (h_p_node->next);
+			return (h_p_node->next);
 		}
 		else
 			h_p_node = h_p_node->next;
